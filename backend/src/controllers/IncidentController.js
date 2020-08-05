@@ -5,7 +5,6 @@ const { offset } = require('../database/connection');
 module.exports = {
     async index (request, response){
         const { page = 1 } = request.query;
-
         /*
          *count retorna um array, count entre colchetes 
          *vai me dá a primeira posição do array
@@ -64,13 +63,13 @@ module.exports = {
         //acessa cabeçalho da requisição
         const ong_id = request.headers.authorization;
 
-        const incidents = await connection('incidents')
+        const incident = await connection('incidents')
         // where id=id ==> campo id = valor da variável id
         .where('id',id)
         .select('ong_id')
         .first()
 
-        if(incidents.ong_id != ong_id){
+        if(incident.ong_id != ong_id){
             //troca o status do response para 401 - Não autorizado
             return response.status(401).json({ error: 'Operation not permited.' });
         }
